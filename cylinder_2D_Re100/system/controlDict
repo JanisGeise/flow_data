@@ -1,0 +1,123 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1912                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         20;
+
+deltaT          2.0e-3;
+
+writeControl    runTime;
+
+writeInterval   2.0e-3;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  8;
+
+timeFormat      general;
+
+timePrecision   8;
+
+runTimeModifiable false;
+
+functions
+{
+    forces
+    {
+        type             forceCoeffs;
+        libs             (forces);
+        executeControl   writeTime;
+        executeInterval  1;
+        writeControl     writeTime;
+        writeInterval    1;
+        log false;
+        patches
+        (
+            cylinder
+        );
+        rhoInf      1;
+        rho         rhoInf;
+        CofR        (0.2 0.2 0.005);
+        liftDir     (0 1 0);
+        dragDir     (1 0 0);
+        pitchAxis   (0 0 1);
+        magUInf     1.0;
+        lRef        0.1;
+        Aref        0.001;
+    }
+
+    gradU
+    {
+        type            grad;
+        libs            (fieldFunctionObjects);
+        field           U;
+        result          gradU;
+        log             true;
+        executeControl   writeTime;
+        executeInterval  1;
+        writeControl     writeTime;
+        writeInterval    1;
+    }
+
+    samples
+    {
+        type            surfaces;
+        libs            (sampling);
+        log             true;
+        executeControl   writeTime;
+        executeInterval  1;
+        writeControl     writeTime;
+        writeInterval    1;
+        surfaceFormat   raw;
+        formatOptions
+        {
+            raw 
+            {
+                normal true;
+            }
+        }
+        fields          (gradU);
+        surfaces
+        {
+            cylinder
+            {
+                type patch;
+                patches (cylinder);
+                interpolate false;
+                invariant true;
+            }
+            top
+            {
+                type patch;
+                patches (top);
+                interpolate false;
+                invariant true;
+            }
+        }
+    }
+}
+
+// ************************************************************************* //
