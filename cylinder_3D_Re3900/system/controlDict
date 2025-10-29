@@ -61,7 +61,7 @@ functions
         );
         rhoInf      1;
         rho         rhoInf;
-        CofR        (0.2 0.2 0.005);
+        CofR        (0.8, 1.0, 1.0);
         liftDir     (0 1 0);
         dragDir     (1 0 0);
         pitchAxis   (0 0 1);
@@ -144,47 +144,50 @@ functions
         sets
         {
             // line samples @ x/D = 1.06, 1.54, 2.02 (Fig 10) & 5, 7, 10 (Fig 9)), z = pi D/2
+            // Note: although the nomenclature is according to Lehmkuhl (https://pubs.aip.org/aip/pof/article/25/8/085109/102970/Low-frequency-unsteadiness-in-the-vortex-formation),
+            //       the actual positions are different, since the origin of our coordinate system differs.
+            //       The nomenclature is kept here for consistency, since the distance relative to the cylinder is the same.
             xD_106
             {
                 type face;
                 axis y;
-                start (1.106 0 0.157079633);
-                end (1.106 2 0.157079633);
+                start (0.906 0 0.157079633);
+                end (0.906 2 0.157079633);
             }
             xD_154
             {
                 type face;
                 axis y;
-                start (1.154 0 0.157079633);
-                end (1.154 2 0.157079633);
+                start (0.954 0 0.157079633);
+                end (0.954 2 0.157079633);
             }
             xD_202
             {
                 type face;
                 axis y;
-                start (1.202 0 0.157079633);
-                end (1.202 2 0.157079633);
+                start (1.002 0 0.157079633);
+                end (1.002 2 0.157079633);
             }
             xD_5
+            {
+                type face;
+                axis y;
+                start (1.3 0 0.157079633);
+                end (1.3 2 0.157079633);
+            }
+            xD_7
             {
                 type face;
                 axis y;
                 start (1.5 0 0.157079633);
                 end (1.5 2 0.157079633);
             }
-            xD_7
-            {
-                type face;
-                axis y;
-                start (1.7 0 0.157079633);
-                end (1.7 2 0.157079633);
-            }
             xD_10
             {
                 type face;
                 axis y;
-                start (2.0 0 0.157079633);
-                end (2.0 2 0.157079633);
+                start (1.8 0 0.157079633);
+                end (1.8 2 0.157079633);
             }
             // wake centerline in streamwise direction
             yD_1
