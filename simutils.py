@@ -169,7 +169,7 @@ def load_probes(load_path: str, num_probes: int, filename: str = "p", skip_n_poi
             for pb in range(num_probes):
                 names += [f"{k}_probe_{pb}" for k in ["ux", "uy", "uz"]]
 
-            probe = read_table(join(d, filename), sep=r"\s+", skiprows=(num_probes + 2) + skip_n_points, header=None,
+            probe = read_table(join(d, filename), sep=r"\s+", skiprows=(num_probes + 1) + skip_n_points, header=None,
                                   names=names)
 
             # replace all parentheses, because (ux u_y uz) is separated since all columns are separated with white space
